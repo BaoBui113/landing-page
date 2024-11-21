@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 
 const Axios = axios.create({
@@ -29,7 +30,7 @@ Axios.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       // Clear local storage and redirect to login
       localStorage.removeItem("access_token");
-
+      Cookies.remove("access_token");
       if (typeof window !== "undefined") {
         window.location.href = "/admin/login";
       }
